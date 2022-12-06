@@ -9,6 +9,10 @@ ul {
 li {
   float: left;
 }
+li.right {
+  float: right;
+  background-color: #444;
+}
 
 li a {
   display: block;
