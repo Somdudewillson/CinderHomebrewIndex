@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HomebrewSearchBarComponent } from './homebrew-search-bar/homebrew-search-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomebrewSearchBarComponent
   ],
   imports: [
     BrowserModule

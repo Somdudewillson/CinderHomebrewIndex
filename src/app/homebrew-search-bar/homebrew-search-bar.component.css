@@ -1,0 +1,8 @@
+div {
+  margin: auto;
+  background-color: lightgray;
+  border: 2px outset gray;
+  padding: 10px;
+  width: 50%;
+  text-align: center;
+}
