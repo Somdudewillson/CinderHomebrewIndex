@@ -1,0 +1,8 @@
+<div>
+    <ul>
+        <b>{{name}}</b>
+        <li *ngFor="let enumKey of enumKeys" #checkboxes>
+            <input type="checkbox" [name]="enumKey" [id]="enumKey" > {{formatEnumName(enumKey)}}
+        </li>
+    </ul>
+</div>
