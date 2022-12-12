@@ -5,6 +5,11 @@ ul {
   text-align: left;
 }
 
+ul li {
+  font-style: italic;
+  font-size: smaller;
+}
+
 div {
   display: inline-flex;
 }
