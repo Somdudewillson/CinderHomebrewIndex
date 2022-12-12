@@ -6,3 +6,9 @@ div {
   width: 50%;
   text-align: center;
 }
+
+a.pseudolink {
+  cursor: pointer;
+  text-decoration: underline;
+  color: darkcyan;
+}

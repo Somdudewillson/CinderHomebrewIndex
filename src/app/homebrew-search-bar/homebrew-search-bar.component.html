@@ -1,11 +1,16 @@
 <div>
-  <select name="type" id="type" *ngIf="!urlHasTypeParam()">
-    <option value="">Everything</option>
-    <option value="race">Races</option>
-    <option value="class">Classes</option>
-    <option value="spell">Spells</option>
-    <option value="item">Magic Items</option>
-    <option value="monster">Monsters</option>
-  </select>
-  <input type="text" size=50><button>Search</button>
+  <form (ngSubmit)="doSearch($event)">
+    <select name="type" id="type" *ngIf="!urlHasTypeParam()">
+      <option value="">Everything</option>
+      <option value="race">Races</option>
+      <option value="class">Classes</option>
+      <option value="spell">Spells</option>
+      <option value="item">Magic Items</option>
+      <option value="monster">Monsters</option>
+    </select>
+    <input type="text" size=50 placeholder="Search Title/Content/Author"><button type="submit">Search</button>
+    <br>
+    <a class="pseudolink" (click)="toggleAdvanced()">Show Advanced {{ showAdvancedSearch ? "▲" : "▼" }}</a>
+    <div id="advancedSearchElements" *ngIf="showAdvancedSearch"></div>
+  </form>
 </div>

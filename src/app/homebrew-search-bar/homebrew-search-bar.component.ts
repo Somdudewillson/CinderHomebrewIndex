@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-homebrew-search-bar',
@@ -6,7 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./homebrew-search-bar.component.css']
 })
 export class HomebrewSearchBarComponent {
+
+  searchForm = new FormGroup({
+    type: new FormControl(''),
+    lastName: new FormControl(''),
+    address: new FormGroup({
+      street: new FormControl(''),
+      city: new FormControl(''),
+      state: new FormControl(''),
+      zip: new FormControl('')
+    })
+  });
   searchType: string|null = null;
+  showAdvancedSearch = false;
 
   ngOnInit() {
     const queryString = window.location.search;
@@ -16,5 +29,13 @@ export class HomebrewSearchBarComponent {
 
   urlHasTypeParam(): boolean {
     return this.searchType != null && this.searchType.length>0;
+  }
+
+  toggleAdvanced() {
+    this.showAdvancedSearch = !this.showAdvancedSearch;
+  }
+
+  doSearch(event: any) {
+    console.log(event);
   }
 }
