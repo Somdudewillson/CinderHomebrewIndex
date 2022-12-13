@@ -63,6 +63,12 @@ export class HomebrewSearchBarComponent {
   updateType(event: Event) {
     this.searchType = (event.target as HTMLSelectElement).value;
   }
+  handleSearchBoxKeypress(event: Event) {
+    if ((event as KeyboardEvent).key === "Enter") {
+      event.preventDefault();
+      this.doSearch();
+    }
+  }
 
   toggleAdvanced() {
     this.showAdvancedSearch = !this.showAdvancedSearch;

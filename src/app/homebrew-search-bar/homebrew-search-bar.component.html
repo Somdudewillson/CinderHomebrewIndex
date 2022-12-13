@@ -7,11 +7,11 @@
     <option value="ITEM">Magic Items</option>
     <option value="MONSTER">Monsters</option>
   </select>
-  <input type="text" size=50 placeholder="Search Title/Content/Author" #searchText><button
+  <input type="text" size=50 placeholder="Search Title/Content/Author" (keypress)="handleSearchBoxKeypress($event)" #searchText><button
     (click)="doSearch()">Search</button>
   <br>
   <a class="pseudolink" (click)="toggleAdvanced()">Show Advanced {{ showAdvancedSearch ? "▲" : "▼" }}</a>
   <div id="advancedSearchElements" *ngIf="showAdvancedSearch">
-    <item-search-fields></item-search-fields>
+    <item-search-fields *ngIf="searchType=='ITEM'"></item-search-fields>
   </div>
 </div>
