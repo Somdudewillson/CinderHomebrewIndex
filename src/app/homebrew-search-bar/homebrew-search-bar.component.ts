@@ -21,7 +21,7 @@ export class HomebrewSearchBarComponent {
   @ViewChild('searchText')
   searchTextElement!: ElementRef;
   @ViewChild(ItemSearchFieldsComponent)
-  itemSearchFields!: ItemSearchFieldsComponent;
+  itemSearchFields: ItemSearchFieldsComponent|undefined;
 
   @Output()
   newSearchResultsEvent = new EventEmitter<HomebrewData[]>();
@@ -44,11 +44,13 @@ export class HomebrewSearchBarComponent {
   }
 
   async doSearch() {
-    let baseSearch = this.fetchBaseSearchData();
-    let extendedSearch = this.itemSearchFields.extendSearchData(baseSearch);
+    let searchObject = this.fetchBaseSearchData();
+    if (this.itemSearchFields!=undefined) {
+      searchObject = this.itemSearchFields.extendSearchData(searchObject);
+    }
 
     let indexLookupResult = new Set<string>();
-    const searchKeywords = extendedSearch.searchString.split(" ");
+    const searchKeywords = searchObject.searchString.split(" ");
     for (const indexKey of Object.keys(SearchIndex)) {
       let indexDistance = searchKeywords
         .map(keyword=>computeStringSimilarity(keyword,indexKey)/Math.max(keyword.length,indexKey.length))
@@ -64,7 +66,7 @@ export class HomebrewSearchBarComponent {
     let resultList: Array<{data:HomebrewData,score:number}> = [];
     for (const dataFileName of indexLookupResult) {
       const loadedData = HomebrewData.typifyHomebrewData(require(`../../assets/homebrew_data/${dataFileName}.json`));
-      const dataScore = extendedSearch.scoreDataMatch(loadedData);
+      const dataScore = searchObject.scoreDataMatch(loadedData);
 
       if (dataScore>0) {
         resultList.push({data:loadedData,score:dataScore});
