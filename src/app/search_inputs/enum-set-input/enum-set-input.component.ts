@@ -5,7 +5,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { formatEnumName } from 'src/app/utils/HomebrewStringUtils';
 import { IEnhancedInput } from '../IEnhancedInput';
 
@@ -24,6 +24,8 @@ import { IEnhancedInput } from '../IEnhancedInput';
 export class EnumSetInputComponent<E extends {}>
   implements IEnhancedInput<E[] | null>
 {
+  formatEnumName = formatEnumName;
+
   @Input()
   name!: string;
   @Input()
@@ -32,11 +34,6 @@ export class EnumSetInputComponent<E extends {}>
   checkboxes: QueryList<ElementRef> | undefined;
 
   enumKeys: string[] = [];
-
-  formatEnumName = formatEnumName;
-  onChange = (enumSet: number[]) => {};
-  onTouched = () => {};
-  touched = false;
 
   ngOnInit() {
     if (this.targetEnum == undefined) {
@@ -60,6 +57,6 @@ export class EnumSetInputComponent<E extends {}>
       }
     }
 
-    return result.length==0?null:result;
+    return result.length == 0 ? null : result;
   }
 }
