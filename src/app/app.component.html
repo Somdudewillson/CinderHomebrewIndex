@@ -1,2 +1,3 @@
 <app-navbar currentPage=""></app-navbar>
-<app-homebrew-search-bar></app-homebrew-search-bar>
+<app-homebrew-search-bar (newSearchResultsEvent)="passSearchResults($event)"></app-homebrew-search-bar>
+<app-homebrew-search-results [searchResultsUpdate]="latestSearchListing"></app-homebrew-search-results>
