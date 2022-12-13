@@ -10,6 +10,7 @@ import { ItemSearchFieldsComponent } from './homebrew-search-bar/item-search-fie
 import { HomebrewSearchResultsComponent } from './homebrew-search-results/homebrew-search-results.component';
 import { EnhancedBooleanInputComponent } from './search_inputs/enhanced-boolean-input/enhanced-boolean-input.component';
 import { EnumInputComponent } from './search_inputs/enum-input/enum-input.component';
+import { ItemListingDetailComponent } from './homebrew-search-results/item-listing-detail/item-listing-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EnumInputComponent } from './search_inputs/enum-input/enum-input.compon
     ItemSearchFieldsComponent,
     HomebrewSearchResultsComponent,
     EnhancedBooleanInputComponent,
-    EnumInputComponent
+    EnumInputComponent,
+    ItemListingDetailComponent
   ],
   imports: [
     BrowserModule,
