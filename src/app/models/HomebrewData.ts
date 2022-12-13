@@ -7,6 +7,19 @@ export class HomebrewData {
     link: string = '';
     tags: string[] = [];
     content: string[] = [];
+
+    public static typifyHomebrewData(input: any): HomebrewData|HomebrewItemData|HomebrewMonsterSearchData|HomebrewSpellSearchData {
+        switch(input["type"]) {
+            case HomebrewType.ITEM:
+                return input as HomebrewItemData;
+            case HomebrewType.MONSTER:
+                return input as HomebrewMonsterSearchData;
+            case HomebrewType.SPELL:
+                return input as HomebrewSpellSearchData;
+            default:
+                return input as HomebrewData;
+        }
+    }
 }
 
 export class HomebrewItemData extends HomebrewData {
