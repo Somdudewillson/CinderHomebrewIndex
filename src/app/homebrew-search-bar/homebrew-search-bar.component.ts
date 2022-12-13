@@ -74,6 +74,7 @@ export class HomebrewSearchBarComponent {
     }
     resultList.sort((a,b)=>b.score-a.score);
 
+    console.log(resultList);
     this.newSearchResultsEvent.emit(resultList.map(sortableData=>sortableData.data));
   }
 
