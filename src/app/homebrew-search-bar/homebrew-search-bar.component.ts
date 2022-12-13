@@ -47,7 +47,7 @@ export class HomebrewSearchBarComponent {
   @Output()
   newSearchResultsEvent = new EventEmitter<HomebrewData[]>();
 
-  searchType: string | null = null;
+  searchType: string | undefined;
   searchTypeFromUrl = false;
   showAdvancedSearch = false;
 
@@ -56,7 +56,7 @@ export class HomebrewSearchBarComponent {
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.has('type')) {
       this.searchTypeFromUrl = true;
-      this.searchType = urlParams.get('type');
+      this.searchType = urlParams.get('type')!;
     }
   }
 
@@ -106,7 +106,6 @@ export class HomebrewSearchBarComponent {
     }
     resultList.sort((a, b) => b.score - a.score);
 
-    console.log(resultList);
     this.newSearchResultsEvent.emit(
       resultList.map((sortableData) => sortableData.data)
     );
@@ -118,22 +117,8 @@ export class HomebrewSearchBarComponent {
     result.searchString = (
       this.searchTextElement.nativeElement as HTMLInputElement
     ).value;
-    switch (this.searchType) {
-      case 'class':
-        result.type = HomebrewType.CLASS;
-        break;
-      case 'race':
-        result.type = HomebrewType.RACE;
-        break;
-      case 'spell':
-        result.type = HomebrewType.SPELL;
-        break;
-      case 'item':
-        result.type = HomebrewType.ITEM;
-        break;
-      case 'monster':
-        result.type = HomebrewType.MONSTER;
-        break;
+    if (this.searchType!=undefined && this.searchType.length>0) {
+      result.type = HomebrewType[this.searchType as keyof typeof HomebrewType];
     }
 
     return result;

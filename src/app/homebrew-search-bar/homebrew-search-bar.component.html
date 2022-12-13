@@ -1,11 +1,11 @@
 <div id="outerDiv">
   <select name="type" id="type" (change)="updateType($event)" *ngIf="!searchTypeFromUrl">
     <option value="">Everything</option>
-    <option value="race">Races</option>
-    <option value="class">Classes</option>
-    <option value="spell">Spells</option>
-    <option value="item">Magic Items</option>
-    <option value="monster">Monsters</option>
+    <option value="RACE">Races</option>
+    <option value="CLASS">Classes</option>
+    <option value="SPELL">Spells</option>
+    <option value="ITEM">Magic Items</option>
+    <option value="MONSTER">Monsters</option>
   </select>
   <input type="text" size=50 placeholder="Search Title/Content/Author" #searchText><button
     (click)="doSearch()">Search</button>

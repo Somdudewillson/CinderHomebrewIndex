@@ -26,7 +26,7 @@ export class HomebrewData {
   public static parseHomebrewData(input: any): HomebrewData {
     let result = input as HomebrewItemData;
 
-    result.type = HomebrewType[input.type as keyof typeof HomebrewType];
+    result.type = parseEnum(input.type,HomebrewType);
 
     return result;
   }
@@ -38,13 +38,13 @@ export class HomebrewData {
     | HomebrewItemData
     | HomebrewMonsterData
     | HomebrewSpellData {
-    switch (input['type']) {
+    switch (parseEnum(input.type,HomebrewType)) {
       case HomebrewType.ITEM:
         return HomebrewItemData.parseHomebrewData(input);
       case HomebrewType.MONSTER:
         return HomebrewMonsterData.parseHomebrewData(input);
       case HomebrewType.SPELL:
-        return HomebrewItemData.parseHomebrewData(input);
+        return HomebrewSpellData.parseHomebrewData(input);
       default:
         return HomebrewData.parseHomebrewData(input);
     }
@@ -60,8 +60,8 @@ export class HomebrewItemData extends HomebrewData {
   public static override parseHomebrewData(input: any): HomebrewItemData {
     let result = HomebrewData.parseHomebrewData(input) as HomebrewItemData;
 
-    result.itemType = ItemType[input.itemType as keyof typeof ItemType];
-    result.rarity = ItemRarity[input.rarity as keyof typeof ItemRarity];
+    result.itemType = parseEnum(input.itemType,ItemType);
+    result.rarity = parseEnum(input.rarity,ItemRarity);
 
     return result;
   }
@@ -88,16 +88,16 @@ export class HomebrewMonsterData extends HomebrewData {
   public static override parseHomebrewData(input: any): HomebrewMonsterData {
     let result = HomebrewData.parseHomebrewData(input) as HomebrewMonsterData;
 
-    result.creatureType = CreatureType[input.creatureType as keyof typeof CreatureType];
-    result.size = SizeClass[input.size as keyof typeof SizeClass];
-    result.specialSenses = (input.specialSenses as unknown[]).map(key=>SpecialSense[key as keyof typeof SpecialSense]);
-    result.saveProficiencies = (input.saveProficiencies as unknown[]).map(key=>StatType[key as keyof typeof StatType]);
-    result.skillProficiencies = (input.skillProficiencies as unknown[]).map(key=>SkillType[key as keyof typeof SkillType]);
-    result.conditionImmunities = (input.conditionImmunities as unknown[]).map(key=>ConditionType[key as keyof typeof ConditionType]);
-    result.vulnerabilities = (input.vulnerabilities as unknown[]).map(key=>DamageType[key as keyof typeof DamageType]);
-    result.resistances = (input.resistances as unknown[]).map(key=>DamageType[key as keyof typeof DamageType]);
-    result.damageImmunities = (input.damageImmunities as unknown[]).map(key=>DamageType[key as keyof typeof DamageType]);
-    result.movementTypes = (input.movementTypes as unknown[]).map(key=>MovementTypes[key as keyof typeof MovementTypes]);
+    result.creatureType = parseEnum(input.creatureType,CreatureType);
+    result.size = parseEnum(input.size,SizeClass);
+    result.specialSenses = (input.specialSenses as unknown[]).map(key=>parseEnum(key,SpecialSense));
+    result.saveProficiencies = (input.saveProficiencies as unknown[]).map(key=>parseEnum(key,StatType));
+    result.skillProficiencies = (input.skillProficiencies as unknown[]).map(key=>parseEnum(key,SkillType));
+    result.conditionImmunities = (input.conditionImmunities as unknown[]).map(key=>parseEnum(key,ConditionType));
+    result.vulnerabilities = (input.vulnerabilities as unknown[]).map(key=>parseEnum(key,DamageType));
+    result.resistances = (input.resistances as unknown[]).map(key=>parseEnum(key,DamageType));
+    result.damageImmunities = (input.damageImmunities as unknown[]).map(key=>parseEnum(key,DamageType));
+    result.movementTypes = (input.movementTypes as unknown[]).map(key=>parseEnum(key,MovementTypes));
 
     return result;
   }
@@ -116,13 +116,17 @@ export class HomebrewSpellData extends HomebrewData {
   public static override parseHomebrewData(input: any): HomebrewSpellData {
     let result = HomebrewData.parseHomebrewData(input) as HomebrewSpellData;
 
-    result.spellLevel = SpellLevel[input.spellLevel as keyof typeof SpellLevel];
-    result.school = SpellSchool[input.school as keyof typeof SpellSchool];
-    result.saveTypes = (input.saveTypes as unknown[]).map(key=>StatType[key as keyof typeof StatType]);
-    result.damageTypes = (input.damageTypes as unknown[]).map(key=>DamageType[key as keyof typeof DamageType]);
-    result.conditions = (input.conditions as unknown[]).map(key=>ConditionType[key as keyof typeof ConditionType]);
-    result.components = (input.components as unknown[]).map(key=>SpellComponents[key as keyof typeof SpellComponents]);
+    result.spellLevel = parseEnum(input.spellLevel,SpellLevel);
+    result.school = parseEnum(input.school,SpellSchool);
+    result.saveTypes = (input.saveTypes as unknown[]).map(key=>parseEnum(key,StatType));
+    result.damageTypes = (input.damageTypes as unknown[]).map(key=>parseEnum(key,DamageType));
+    result.conditions = (input.conditions as unknown[]).map(key=>parseEnum(key,ConditionType));
+    result.components = (input.components as unknown[]).map(key=>parseEnum(key,SpellComponents));
 
     return result;
   }
+}
+
+function parseEnum(value: any, enumType: any) {
+  return isNaN(+value)?enumType[value as keyof typeof enumType]:value;
 }
