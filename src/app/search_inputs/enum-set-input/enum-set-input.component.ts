@@ -13,13 +13,6 @@ import { IEnhancedInput } from '../IEnhancedInput';
   selector: 'enum-set-input',
   templateUrl: './enum-set-input.component.html',
   styleUrls: ['./enum-set-input.component.css'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: EnumSetInputComponent,
-    },
-  ],
 })
 export class EnumSetInputComponent<E extends {}>
   implements IEnhancedInput<E[] | null>
