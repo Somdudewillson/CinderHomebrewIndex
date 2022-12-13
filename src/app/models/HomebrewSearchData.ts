@@ -81,7 +81,7 @@ export class HomebrewSearchData {
 export class HomebrewItemSearchData extends HomebrewSearchData {
   itemType: ItemType | null = null;
   rarity: ItemRarity | null = null;
-  requiresAttunment: boolean | null = false;
+  requiresAttunement: boolean | null = false;
   hasCharges: boolean | null = false;
 
   override filterData(data: HomebrewItemData): boolean {
@@ -89,10 +89,17 @@ export class HomebrewItemSearchData extends HomebrewSearchData {
       return false;
     }
     console.log('itemFilter')
+    console.log(this)
+    console.log(data)
+    console.log(super.filterData(data))
+    console.log(this.itemType==null || data.itemType == this.itemType)
+    console.log(this.rarity==null || data.rarity == this.rarity)
+    console.log(this.requiresAttunement==null || data.requiresAttunement == this.requiresAttunement)
+    console.log(this.hasCharges==null || data.hasCharges == this.hasCharges)
     return super.filterData(data) &&
       (this.itemType==null || data.itemType == this.itemType) &&
       (this.rarity==null || data.rarity == this.rarity) &&
-      (this.requiresAttunment==null || data.requiresAttunment == this.requiresAttunment) &&
+      (this.requiresAttunement==null || data.requiresAttunement == this.requiresAttunement) &&
       (this.hasCharges==null || data.hasCharges == this.hasCharges);
   }
 }

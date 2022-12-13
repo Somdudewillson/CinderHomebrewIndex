@@ -69,7 +69,7 @@ export class HomebrewData {
 export class HomebrewItemData extends HomebrewData {
   itemType: ItemType = ItemType.WONDEROUS_ITEM;
   rarity: ItemRarity = ItemRarity.COMMON;
-  requiresAttunment: boolean = false;
+  requiresAttunement: boolean = false;
   hasCharges: boolean = false;
 
   public static override parseHomebrewData(input: any): HomebrewItemData {
@@ -78,7 +78,7 @@ export class HomebrewItemData extends HomebrewData {
 
     result.itemType = parseEnum(input.itemType,ItemType);
     result.rarity = parseEnum(input.rarity,ItemRarity);
-    result.requiresAttunment = input.requiresAttunment;
+    result.requiresAttunement = input.requiresAttunement;
     result.hasCharges = input.hasCharges;
 
     return result;

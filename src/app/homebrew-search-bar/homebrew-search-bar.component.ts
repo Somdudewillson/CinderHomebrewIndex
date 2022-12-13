@@ -28,6 +28,7 @@ import { HomebrewSearchData } from 'src/app/models/HomebrewSearchData';
 import * as SearchIndex from '../../assets/index.json';
 import { computeStringSimilarity } from '../utils/StringUtils';
 import { HomebrewData } from '../models/HomebrewData';
+import { HomebrewItemSearchData } from '../models/HomebrewSearchData';
 
 const KEYWORD_SIMILARITY_THRESHOLD = 0.54;
 
@@ -64,7 +65,7 @@ export class HomebrewSearchBarComponent {
     this.searchType = (event.target as HTMLSelectElement).value;
   }
   handleSearchBoxKeypress(event: Event) {
-    if ((event as KeyboardEvent).key === "Enter") {
+    if ((event as KeyboardEvent).key === 'Enter') {
       event.preventDefault();
       this.doSearch();
     }
@@ -75,27 +76,34 @@ export class HomebrewSearchBarComponent {
   }
 
   async doSearch() {
-    let searchObject = this.fetchBaseSearchData();
+    let searchObject: HomebrewSearchData | HomebrewItemSearchData = this.fetchBaseSearchData();
     if (this.itemSearchFields != undefined) {
       searchObject = this.itemSearchFields.extendSearchData(searchObject);
     }
 
     let indexLookupResult = new Set<string>();
-    const searchKeywords = searchObject.searchString.split(' ');
-    for (const indexKey of Object.keys(SearchIndex)) {
-      let indexDistance = searchKeywords
-        .map(
-          (keyword) =>
-            computeStringSimilarity(keyword, indexKey) /
-            Math.max(keyword.length, indexKey.length)
-        )
-        .reduce((a, b) => (a + b + Math.min(a, b) * 2) / 3);
-      indexDistance /= searchKeywords.length;
+    if (searchObject.searchString.length > 0) {
+      const searchKeywords = searchObject.searchString.split(' ');
+      for (const indexKey of Object.keys(SearchIndex)) {
+        let indexDistance = searchKeywords
+          .map(
+            (keyword) =>
+              computeStringSimilarity(keyword, indexKey) /
+              Math.max(keyword.length, indexKey.length)
+          )
+          .reduce((a, b) => (a + b + Math.min(a, b) * 2) / 3);
+        indexDistance /= searchKeywords.length;
 
-      if (indexDistance < KEYWORD_SIMILARITY_THRESHOLD) {
-        SearchIndex[indexKey as keyof typeof SearchIndex].forEach((dataEntry) =>
-          indexLookupResult.add(dataEntry)
-        );
+        if (indexDistance < KEYWORD_SIMILARITY_THRESHOLD) {
+          SearchIndex[indexKey as keyof typeof SearchIndex].forEach(
+            (dataEntry) => indexLookupResult.add(dataEntry)
+          );
+        }
+      }
+    } else {
+      for (const dataFiles of Object.values(SearchIndex)) {
+        if (!Array.isArray(dataFiles)) { continue; }
+        dataFiles.forEach((dataEntry) => indexLookupResult.add(dataEntry));
       }
     }
 
@@ -112,6 +120,7 @@ export class HomebrewSearchBarComponent {
     }
     resultList.sort((a, b) => b.score - a.score);
 
+    console.log(resultList);
     this.newSearchResultsEvent.emit(
       resultList.map((sortableData) => sortableData.data)
     );
@@ -122,8 +131,8 @@ export class HomebrewSearchBarComponent {
 
     result.searchString = (
       this.searchTextElement.nativeElement as HTMLInputElement
-    ).value;
-    if (this.searchType!=undefined && this.searchType.length>0) {
+    ).value.trim();
+    if (this.searchType != undefined && this.searchType.length > 0) {
       result.type = HomebrewType[this.searchType as keyof typeof HomebrewType];
     }
 

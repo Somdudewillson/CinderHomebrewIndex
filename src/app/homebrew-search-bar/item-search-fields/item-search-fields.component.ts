@@ -25,8 +25,8 @@ export class ItemSearchFieldsComponent
   itemTypeField!: ElementRef;
   @ViewChild('rarity')
   rarityField!: ElementRef;
-  @ViewChild('requiresAttunment')
-  requiresAttunmentField!: EnhancedBooleanInputComponent;
+  @ViewChild('requiresAttunement')
+  requiresAttunementField!: EnhancedBooleanInputComponent;
   @ViewChild('hasCharges')
   hasChargesField!: EnhancedBooleanInputComponent;
 
@@ -54,7 +54,7 @@ export class ItemSearchFieldsComponent
     result.itemType =
       itemTypeInput == 0 ? null : ((itemTypeInput - 1) as ItemType);
     result.rarity = rarityInput == 0 ? null : ((rarityInput - 1) as ItemRarity);
-    result.requiresAttunment = this.requiresAttunmentField.getValue();
+    result.requiresAttunement = this.requiresAttunementField.getValue();
     result.hasCharges = this.hasChargesField.getValue();
 
     return result;
