@@ -15,7 +15,7 @@ import {
   SpellComponents,
 } from './HomebrewEnums';
 import { HomebrewData, HomebrewItemData } from './HomebrewData';
-import { computeStringSimilarity } from '../utils/StringUtils';
+import { computeStringSimilarity } from '../utils/HomebrewStringUtils';
 
 export class HomebrewSearchData {
   type: HomebrewType | null = null;

@@ -6,7 +6,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { formatEnumName } from 'src/app/models/HomebrewEnums';
+import { formatEnumName } from 'src/app/utils/HomebrewStringUtils';
 
 @Component({
   selector: 'enum-set-input',

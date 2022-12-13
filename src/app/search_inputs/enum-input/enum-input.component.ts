@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { formatEnumName } from 'src/app/models/HomebrewEnums';
+import { formatEnumName } from 'src/app/utils/HomebrewStringUtils';
 import { IEnhancedInput } from '../IEnhancedInput';
 
 @Component({

@@ -26,7 +26,7 @@ import { ItemSearchFieldsComponent } from './item-search-fields/item-search-fiel
 import { HomebrewSearchData } from 'src/app/models/HomebrewSearchData';
 
 import * as SearchIndex from '../../assets/index.json';
-import { computeStringSimilarity } from '../utils/StringUtils';
+import { computeStringSimilarity } from '../utils/HomebrewStringUtils';
 import { HomebrewData } from '../models/HomebrewData';
 import {
   HomebrewItemSearchData,
