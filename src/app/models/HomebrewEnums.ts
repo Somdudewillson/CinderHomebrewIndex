@@ -198,3 +198,7 @@ export function formatEnumName(inString: string) {
     )
     .join(' ');
 }
+
+export function parseEnum(value: any, enumType: any) {
+  return isNaN(+value)?enumType[value as keyof typeof enumType]:value;
+}

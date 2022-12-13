@@ -6,6 +6,7 @@ import {
   ItemRarity,
   ItemType,
   MovementTypes,
+  parseEnum,
   SizeClass,
   SkillType,
   SpecialSense,
@@ -125,8 +126,4 @@ export class HomebrewSpellData extends HomebrewData {
 
     return result;
   }
-}
-
-function parseEnum(value: any, enumType: any) {
-  return isNaN(+value)?enumType[value as keyof typeof enumType]:value;
 }
