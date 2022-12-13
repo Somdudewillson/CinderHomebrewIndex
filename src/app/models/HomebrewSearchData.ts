@@ -1,9 +1,38 @@
 import { HomebrewType, ItemType, ItemRarity, CreatureType, SizeClass, SpecialSense, StatType, SkillType, ConditionType, DamageType, MovementTypes, SpellLevel, SpellSchool, SpellComponents } from "./HomebrewEnums";
+import { HomebrewData, HomebrewItemData } from './HomebrewData';
+import { computeStringSimilarity } from "../utils/StringUtils";
 
 export class HomebrewSearchData {
-  type: HomebrewType = HomebrewType.CLASS;
-  author: String = '';
-  tags: String[] = [];
+  type: HomebrewType|null = null;
+  searchString: string = '';
+  tags: string[] = [];
+
+  public scoreDataMatch(data: HomebrewData): number {
+    if (!this.filterData(data)) { return 0; }
+    let score = 0;
+    const keywords = this.searchString.split(" ");
+
+    score += HomebrewSearchData.keywordScore(keywords, data.author.split(" "))*2;
+    score += HomebrewSearchData.keywordScore(keywords, data.title.split(" "))*2;
+    score += HomebrewSearchData.keywordScore(keywords, data.content.flatMap(line=>line.split(" ")))*0.8;
+
+    return score;
+  }
+
+  filterData(data: HomebrewData): boolean {
+    return this.type==null||data.type==this.type;
+  }
+
+  static keywordScore(searchKeywords: string[], testKeywords: string[]) {
+    let score = 0;
+    for (const testKeyword of testKeywords) {
+      score += searchKeywords
+        .map(keyword=>computeStringSimilarity(keyword,testKeyword)/Math.max(keyword.length,testKeyword.length))
+        .map(score=>10-score)
+        .reduce((a,b)=>(a+b+Math.min(a,b)*2)/3);
+    }
+    return score / (searchKeywords.length*testKeywords.length);
+  }
 }
 
 export class HomebrewItemSearchData extends HomebrewSearchData {
@@ -11,6 +40,11 @@ export class HomebrewItemSearchData extends HomebrewSearchData {
   rarity: ItemRarity = ItemRarity.COMMON;
   requiresAttunment: boolean = false;
   hasCharges: boolean = false;
+
+  override filterData(data: HomebrewItemData): boolean {
+    if (!(data instanceof HomebrewItemData)) { return false; }
+    return super.filterData(data);
+  }
 }
 
 export class HomebrewMonsterSearchData extends HomebrewSearchData {

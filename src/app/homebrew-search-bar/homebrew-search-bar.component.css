@@ -12,3 +12,8 @@ a.pseudolink {
   text-decoration: underline;
   color: darkcyan;
 }
+
+div#advancedSearchElements {
+  width: 90%;
+  text-align: left;
+}

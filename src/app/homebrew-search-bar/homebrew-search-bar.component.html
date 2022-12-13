@@ -1,5 +1,4 @@
-<div>
-  <form (ngSubmit)="doSearch($event)">
+<div id="outerDiv">
     <select name="type" id="type" *ngIf="!urlHasTypeParam()">
       <option value="">Everything</option>
       <option value="race">Races</option>
@@ -8,9 +7,10 @@
       <option value="item">Magic Items</option>
       <option value="monster">Monsters</option>
     </select>
-    <input type="text" size=50 placeholder="Search Title/Content/Author"><button type="submit">Search</button>
+    <input type="text" size=50 placeholder="Search Title/Content/Author" #searchText><button (click)="doSearch()">Search</button>
     <br>
     <a class="pseudolink" (click)="toggleAdvanced()">Show Advanced {{ showAdvancedSearch ? "▲" : "▼" }}</a>
-    <div id="advancedSearchElements" *ngIf="showAdvancedSearch"></div>
-  </form>
+    <div id="advancedSearchElements" *ngIf="showAdvancedSearch">
+      <item-search-fields></item-search-fields>
+    </div>
 </div>

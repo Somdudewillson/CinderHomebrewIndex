@@ -1,0 +1,10 @@
+Item Type
+<select name="itemType" #itemType>
+    <option *ngFor="let itemType of itemTypeKeys; index as i" [value]="i">{{formatEnumName(itemType)}}</option>
+</select>
+Item Rarity
+<select name="rarity" #rarity>
+    <option *ngFor="let itemRarity of itemRarityKeys; index as i" [value]="i">{{formatEnumName(itemRarity)}}</option>
+</select>
+Requires Attunement <input type="checkbox" name="requiresAttunment" #requiresAttunment>
+Has Charges <input type="checkbox" name="hasCharges" #hasCharges>
