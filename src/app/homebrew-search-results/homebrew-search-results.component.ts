@@ -10,4 +10,8 @@ import { HomebrewData } from '../models/HomebrewData';
 export class HomebrewSearchResultsComponent {
   @Input()
   searchResultsUpdate: HomebrewData[] | undefined;
+
+  generateDescription(data: HomebrewData): string {
+    return "";
+  }
 }

@@ -26,3 +26,12 @@ a.listingContainer span#listingDetails {
   left: 50%;
   transform: translateX(-50%);
 }
+
+a.listingContainer span#listingDesc {
+  position: absolute;
+  right: 11%;
+  width: 35%;
+  white-space: pre-line;
+  text-align: justify;
+  font-size: small;
+}
