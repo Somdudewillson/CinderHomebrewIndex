@@ -163,3 +163,11 @@ export enum SpellComponents {
 	MATERIAL,
 	CONSUMES_MATERIAL
 }
+
+const SHORT_PROPOSITIONS = new Set<string>(["a","an","as","at","but","by","for","in","mid","of","off","on","out","per","pro","qua","to","up","via"]);
+export function formatEnumName(inString: string) {
+  return inString.split("_")
+    .map(str=>str.toLowerCase())
+    .map(str=>SHORT_PROPOSITIONS.has(str)?str:str.replace(/\b\S/g, function(t) { return t.toUpperCase(); }))
+    .join(" ");
+}

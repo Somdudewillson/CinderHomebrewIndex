@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { formatEnumName } from 'src/app/models/HomebrewEnums';
 
-const SHORT_PROPOSITIONS = new Set<string>(["a","an","as","at","but","by","for","in","mid","of","off","on","out","per","pro","qua","to","up","via"]);
 
 @Component({
   selector: 'enum-set-input',
@@ -25,6 +25,7 @@ export class EnumSetInputComponent implements ControlValueAccessor {
 
   enumKeys: string[] = [];
 
+  formatEnumName = formatEnumName;
   onChange = (enumSet: number[]) => {};
   onTouched = () => {};
   touched = false;
@@ -39,13 +40,6 @@ export class EnumSetInputComponent implements ControlValueAccessor {
       this.markAsTouched();
       this.onChange(this.readValue());
     });
-  }
-
-  formatEnumName(inString: string) {
-    return inString.split("_")
-      .map(str=>str.toLowerCase())
-      .map(str=>SHORT_PROPOSITIONS.has(str)?str:str.replace(/\b\S/g, function(t) { return t.toUpperCase(); }))
-      .join(" ");
   }
 
   readValue(): number[] {
