@@ -1,0 +1,16 @@
+div#listingOuter {
+    margin: auto;
+    padding: 10px;
+    width: 80%;
+    text-align: center;
+}
+
+a.listingContainer {
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-align: left;
+    background-color: lightgray;
+    border: 2px solid darkgray;
+    margin-top: 10px;
+}
