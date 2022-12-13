@@ -9,6 +9,7 @@ import {
   HomebrewSearchData,
 } from 'src/app/models/HomebrewSearchData';
 import { IHomebrewSearchExpander } from 'src/app/models/IHomebrewSearchExpander';
+import { EnhancedBooleanInputComponent } from 'src/app/search_inputs/enhanced-boolean-input/enhanced-boolean-input.component';
 
 @Component({
   selector: 'item-search-fields',
@@ -25,37 +26,36 @@ export class ItemSearchFieldsComponent
   @ViewChild('rarity')
   rarityField!: ElementRef;
   @ViewChild('requiresAttunment')
-  requiresAttunmentField!: ElementRef;
+  requiresAttunmentField!: EnhancedBooleanInputComponent;
   @ViewChild('hasCharges')
-  hasChargesField!: ElementRef;
+  hasChargesField!: EnhancedBooleanInputComponent;
 
-  itemTypeKeys: string[] = [];
-  itemRarityKeys: string[] = [];
+  itemTypeKeys: string[] = ['——'];
+  itemRarityKeys: string[] = ['——'];
 
   ngOnInit() {
-    this.itemTypeKeys = Object.keys(ItemType).filter((item) =>
-      isNaN(Number(item))
-    );
-    this.itemRarityKeys = Object.keys(ItemRarity).filter((item) =>
-      isNaN(Number(item))
-    );
+    Object.keys(ItemType)
+      .filter((item) => isNaN(Number(item)))
+      .forEach((item) => this.itemTypeKeys.push(item));
+    Object.keys(ItemRarity)
+      .filter((item) => isNaN(Number(item)))
+      .forEach((item) => this.itemRarityKeys.push(item));
   }
 
   extendSearchData(baseData: HomebrewSearchData): HomebrewItemSearchData {
-    let result = baseData as HomebrewItemSearchData;
+    let result = new HomebrewItemSearchData();
+    HomebrewSearchData.copyHomebrewSearchData(baseData, result);
 
-    result.itemType = (
-      this.itemTypeField.nativeElement as HTMLSelectElement
-    ).selectedIndex;
-    result.rarity = (
-      this.rarityField.nativeElement as HTMLSelectElement
-    ).selectedIndex;
-    result.requiresAttunment = (
-      this.requiresAttunmentField.nativeElement as HTMLInputElement
-    ).checked;
-    result.hasCharges = (
-      this.hasChargesField.nativeElement as HTMLInputElement
-    ).checked;
+    let itemTypeInput = (this.itemTypeField.nativeElement as HTMLSelectElement)
+      .selectedIndex;
+    let rarityInput = (this.rarityField.nativeElement as HTMLSelectElement)
+      .selectedIndex;
+
+    result.itemType =
+      itemTypeInput == 0 ? null : ((itemTypeInput - 1) as ItemType);
+    result.rarity = rarityInput == 0 ? null : ((rarityInput - 1) as ItemRarity);
+    result.requiresAttunment = this.requiresAttunmentField.getValue();
+    result.hasCharges = this.hasChargesField.getValue();
 
     return result;
   }

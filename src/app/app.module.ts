@@ -8,6 +8,7 @@ import { HomebrewSearchBarComponent } from './homebrew-search-bar/homebrew-searc
 import { EnumSetInputComponent } from './homebrew-search-bar/enum-set-input/enum-set-input.component';
 import { ItemSearchFieldsComponent } from './homebrew-search-bar/item-search-fields/item-search-fields.component';
 import { HomebrewSearchResultsComponent } from './homebrew-search-results/homebrew-search-results.component';
+import { EnhancedBooleanInputComponent } from './search_inputs/enhanced-boolean-input/enhanced-boolean-input.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomebrewSearchResultsComponent } from './homebrew-search-results/homebr
     HomebrewSearchBarComponent,
     EnumSetInputComponent,
     ItemSearchFieldsComponent,
-    HomebrewSearchResultsComponent
+    HomebrewSearchResultsComponent,
+    EnhancedBooleanInputComponent
   ],
   imports: [
     BrowserModule,
