@@ -61,7 +61,7 @@ export class HomebrewSearchData {
             Math.max(keyword.length, testKeyword.length)
         )
         .map(scoreFunc)
-        .map((score) => 10 - score)
+        .map((score) => 1 - score)
         .reduce(weightFunc);
     }
     return score / (searchKeywords.length * testKeywords.length);
