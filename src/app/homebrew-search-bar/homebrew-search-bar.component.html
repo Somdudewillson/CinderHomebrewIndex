@@ -1,5 +1,5 @@
 <div id="outerDiv">
-  <select name="type" id="type" *ngIf="!urlHasTypeParam()">
+  <select name="type" id="type" (change)="updateType($event)" *ngIf="!searchTypeFromUrl">
     <option value="">Everything</option>
     <option value="race">Races</option>
     <option value="class">Classes</option>

@@ -48,16 +48,20 @@ export class HomebrewSearchBarComponent {
   newSearchResultsEvent = new EventEmitter<HomebrewData[]>();
 
   searchType: string | null = null;
+  searchTypeFromUrl = false;
   showAdvancedSearch = false;
 
   ngOnInit() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    this.searchType = urlParams.get('type');
+    if (urlParams.has('type')) {
+      this.searchTypeFromUrl = true;
+      this.searchType = urlParams.get('type');
+    }
   }
 
-  urlHasTypeParam(): boolean {
-    return this.searchType != null && this.searchType.length > 0;
+  updateType(event: Event) {
+    this.searchType = (event.target as HTMLSelectElement).value;
   }
 
   toggleAdvanced() {
@@ -114,7 +118,23 @@ export class HomebrewSearchBarComponent {
     result.searchString = (
       this.searchTextElement.nativeElement as HTMLInputElement
     ).value;
-    //result.type = this.searchType==null?:this.searchType;
+    switch (this.searchType) {
+      case 'class':
+        result.type = HomebrewType.CLASS;
+        break;
+      case 'race':
+        result.type = HomebrewType.RACE;
+        break;
+      case 'spell':
+        result.type = HomebrewType.SPELL;
+        break;
+      case 'item':
+        result.type = HomebrewType.ITEM;
+        break;
+      case 'monster':
+        result.type = HomebrewType.MONSTER;
+        break;
+    }
 
     return result;
   }
