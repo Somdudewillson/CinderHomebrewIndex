@@ -28,7 +28,11 @@ import { HomebrewSearchData } from 'src/app/models/HomebrewSearchData';
 import * as SearchIndex from '../../assets/index.json';
 import { computeStringSimilarity } from '../utils/StringUtils';
 import { HomebrewData } from '../models/HomebrewData';
-import { HomebrewItemSearchData } from '../models/HomebrewSearchData';
+import {
+  HomebrewItemSearchData,
+  HomebrewMonsterSearchData,
+  HomebrewSpellSearchData,
+} from '../models/HomebrewSearchData';
 
 const KEYWORD_SIMILARITY_THRESHOLD = 0.54;
 
@@ -76,7 +80,11 @@ export class HomebrewSearchBarComponent {
   }
 
   async doSearch() {
-    let searchObject: HomebrewSearchData | HomebrewItemSearchData = this.fetchBaseSearchData();
+    let searchObject:
+      | HomebrewSearchData
+      | HomebrewItemSearchData
+      | HomebrewMonsterSearchData
+      | HomebrewSpellSearchData = this.fetchBaseSearchData();
     if (this.itemSearchFields != undefined) {
       searchObject = this.itemSearchFields.extendSearchData(searchObject);
     }
@@ -102,7 +110,9 @@ export class HomebrewSearchBarComponent {
       }
     } else {
       for (const dataFiles of Object.values(SearchIndex)) {
-        if (!Array.isArray(dataFiles)) { continue; }
+        if (!Array.isArray(dataFiles)) {
+          continue;
+        }
         dataFiles.forEach((dataEntry) => indexLookupResult.add(dataEntry));
       }
     }
