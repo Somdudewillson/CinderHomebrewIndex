@@ -15,6 +15,11 @@ export function computeStringSimilarity(a: string, b: string): number {
     .distance;
 }
 
+export function toTitleCase(inString: string): string {
+  return inString.replace(/\b\S/g, function (t) {
+    return t.toUpperCase();
+  });
+}
 const SHORT_PROPOSITIONS = new Set<string>([
   'a',
   'an',
@@ -40,12 +45,6 @@ export function formatEnumName(inString: string) {
   return inString
     .split('_')
     .map((str) => str.toLowerCase())
-    .map((str) =>
-      SHORT_PROPOSITIONS.has(str)
-        ? str
-        : str.replace(/\b\S/g, function (t) {
-            return t.toUpperCase();
-          })
-    )
+    .map((str) => (SHORT_PROPOSITIONS.has(str) ? str : toTitleCase(str)))
     .join(' ');
 }
