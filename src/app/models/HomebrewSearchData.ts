@@ -52,18 +52,18 @@ export class HomebrewSearchData {
     weightFunc = (a: number, b: number) => (a + b + Math.min(a, b) * 2) / 3,
     scoreFunc = (score: number) => score
   ) {
-    let score = 0;
-    for (const testKeyword of testKeywords) {
-      score += searchKeywords
-        .map(
-          (keyword) =>
-            computeStringSimilarity(keyword, testKeyword) /
-            Math.max(keyword.length, testKeyword.length)
-        )
-        .map(scoreFunc)
-        .map((score) => 1 - score)
-        .reduce(weightFunc);
-    }
+    let score = testKeywords
+      .flatMap((testKeyword) =>
+        searchKeywords
+          .map(
+            (keyword) =>
+              computeStringSimilarity(keyword, testKeyword) /
+              Math.max(keyword.length, testKeyword.length)
+          )
+          .map(scoreFunc)
+          .map((score) => 1 - score)
+      )
+      .reduce(weightFunc);
     return score / (searchKeywords.length * testKeywords.length);
   }
 }
