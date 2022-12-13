@@ -7,9 +7,8 @@ import { IEnhancedInput } from '../IEnhancedInput';
   templateUrl: './enum-input.component.html',
   styleUrls: ['./enum-input.component.css'],
 })
-export class EnumInputComponent<
-  E extends {}
-> implements IEnhancedInput<E | null>
+export class EnumInputComponent<E extends {}>
+  implements IEnhancedInput<E | null>
 {
   formatEnumName = formatEnumName;
 
