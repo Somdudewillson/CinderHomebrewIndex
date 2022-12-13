@@ -22,12 +22,22 @@ export class HomebrewSearchData {
   searchString: string = '';
   tags: string[] = [];
 
+  public static copyHomebrewSearchData(source: HomebrewSearchData, target: HomebrewSearchData) {
+    target.type = source.type;
+    target.searchString = source.searchString;
+    target.tags = source.tags;
+  }
+
   public scoreDataMatch(data: HomebrewData): number {
     if (!this.filterData(data)) {
       return 0;
     }
+    if (this.searchString.trim().length==0) {
+      return 0xFFFF-data.title.charCodeAt(0);
+    }
+
     let score = 0;
-    const keywords = this.searchString.split(' ');
+    const keywords = this.searchString.trim().split(' ');
 
     score +=
       HomebrewSearchData.keywordScore(keywords, data.author.split(' ')) * 2;
@@ -69,16 +79,21 @@ export class HomebrewSearchData {
 }
 
 export class HomebrewItemSearchData extends HomebrewSearchData {
-  itemType: ItemType = ItemType.WONDEROUS_ITEM;
-  rarity: ItemRarity = ItemRarity.COMMON;
-  requiresAttunment: boolean = false;
-  hasCharges: boolean = false;
+  itemType: ItemType | null = null;
+  rarity: ItemRarity | null = null;
+  requiresAttunment: boolean | null = false;
+  hasCharges: boolean | null = false;
 
   override filterData(data: HomebrewItemData): boolean {
     if (!(data instanceof HomebrewItemData)) {
       return false;
     }
-    return super.filterData(data);
+    console.log('itemFilter')
+    return super.filterData(data) &&
+      (this.itemType==null || data.itemType == this.itemType) &&
+      (this.rarity==null || data.rarity == this.rarity) &&
+      (this.requiresAttunment==null || data.requiresAttunment == this.requiresAttunment) &&
+      (this.hasCharges==null || data.hasCharges == this.hasCharges);
   }
 }
 
