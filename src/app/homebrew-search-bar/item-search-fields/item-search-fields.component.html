@@ -1,10 +1,6 @@
 Item Type
-<select name="itemType" #itemType>
-    <option *ngFor="let itemType of itemTypeKeys; index as i" [value]="i">{{formatEnumName(itemType)}}</option>
-</select>
+<enum-input [targetEnum]="ItemType" #itemType></enum-input>
 Item Rarity
-<select name="rarity" #rarity>
-    <option *ngFor="let itemRarity of itemRarityKeys; index as i" [value]="i">{{formatEnumName(itemRarity)}}</option>
-</select>
+<enum-input [targetEnum]="ItemRarity" #rarity></enum-input>
 Requires Attunement <enhanced-boolean-input #requiresAttunement></enhanced-boolean-input>
 Has Charges <enhanced-boolean-input #hasCharges></enhanced-boolean-input>

@@ -10,6 +10,7 @@ import {
 } from 'src/app/models/HomebrewSearchData';
 import { IHomebrewSearchExpander } from 'src/app/models/IHomebrewSearchExpander';
 import { EnhancedBooleanInputComponent } from 'src/app/search_inputs/enhanced-boolean-input/enhanced-boolean-input.component';
+import { EnumInputComponent } from 'src/app/search_inputs/enum-input/enum-input.component';
 
 @Component({
   selector: 'item-search-fields',
@@ -20,11 +21,13 @@ export class ItemSearchFieldsComponent
   implements IHomebrewSearchExpander<HomebrewItemSearchData>
 {
   formatEnumName = formatEnumName;
+  ItemType = ItemType;
+  ItemRarity = ItemRarity;
 
   @ViewChild('itemType')
-  itemTypeField!: ElementRef;
+  itemTypeField!: EnumInputComponent<ItemType>;
   @ViewChild('rarity')
-  rarityField!: ElementRef;
+  rarityField!: EnumInputComponent<ItemRarity>;
   @ViewChild('requiresAttunement')
   requiresAttunementField!: EnhancedBooleanInputComponent;
   @ViewChild('hasCharges')
@@ -46,14 +49,8 @@ export class ItemSearchFieldsComponent
     let result = new HomebrewItemSearchData();
     HomebrewSearchData.copyHomebrewSearchData(baseData, result);
 
-    let itemTypeInput = (this.itemTypeField.nativeElement as HTMLSelectElement)
-      .selectedIndex;
-    let rarityInput = (this.rarityField.nativeElement as HTMLSelectElement)
-      .selectedIndex;
-
-    result.itemType =
-      itemTypeInput == 0 ? null : ((itemTypeInput - 1) as ItemType);
-    result.rarity = rarityInput == 0 ? null : ((rarityInput - 1) as ItemRarity);
+    result.itemType = this.itemTypeField.getValue();
+    result.rarity = this.rarityField.getValue();
     result.requiresAttunement = this.requiresAttunementField.getValue();
     result.hasCharges = this.hasChargesField.getValue();
 

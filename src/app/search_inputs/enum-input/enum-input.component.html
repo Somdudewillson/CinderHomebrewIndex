@@ -1,0 +1,3 @@
+<select name="enumInput" #enumInput>
+    <option *ngFor="let enumKey of enumKeys; index as i" [value]="i">{{formatEnumName(enumKey)}}</option>
+</select>
