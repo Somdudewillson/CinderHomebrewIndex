@@ -1,7 +1,12 @@
-import { Component, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { formatEnumName } from 'src/app/models/HomebrewEnums';
-
 
 @Component({
   selector: 'enum-set-input',
@@ -10,9 +15,9 @@ import { formatEnumName } from 'src/app/models/HomebrewEnums';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      multi:true,
-      useExisting: EnumSetInputComponent
-    }
+      multi: true,
+      useExisting: EnumSetInputComponent,
+    },
   ],
 })
 export class EnumSetInputComponent implements ControlValueAccessor {
@@ -31,12 +36,13 @@ export class EnumSetInputComponent implements ControlValueAccessor {
   touched = false;
 
   ngOnInit() {
-    this.enumKeys = Object.keys(this.sourceEnum)
-      .filter(item => isNaN(Number(item)));
+    this.enumKeys = Object.keys(this.sourceEnum).filter((item) =>
+      isNaN(Number(item))
+    );
   }
 
   ngAfterViewInit() {
-    this.checkboxes.changes.subscribe((_)=>{
+    this.checkboxes.changes.subscribe((_) => {
       this.markAsTouched();
       this.onChange(this.readValue());
     });
@@ -45,7 +51,7 @@ export class EnumSetInputComponent implements ControlValueAccessor {
   readValue(): number[] {
     let result: number[] = [];
 
-    for (let i=0;i<this.checkboxes.length;i++) {
+    for (let i = 0; i < this.checkboxes.length; i++) {
       let checkbox: HTMLInputElement = this.checkboxes.get(i)!.nativeElement;
       if (checkbox.checked) {
         result.push(i);
@@ -55,9 +61,12 @@ export class EnumSetInputComponent implements ControlValueAccessor {
     return result;
   }
   writeValue(enumSet: number[]): void {
-    for (const checkboxRef of this.checkboxes) { checkboxRef.nativeElement.checked = false; }
+    for (const checkboxRef of this.checkboxes) {
+      checkboxRef.nativeElement.checked = false;
+    }
     for (const enumID of enumSet) {
-      let checkbox: HTMLInputElement = this.checkboxes.get(enumID)!.nativeElement;
+      let checkbox: HTMLInputElement =
+        this.checkboxes.get(enumID)!.nativeElement;
       checkbox.checked = true;
     }
   }
@@ -75,7 +84,9 @@ export class EnumSetInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    for (const checkboxRef of this.checkboxes) { (checkboxRef.nativeElement as HTMLInputElement).disabled = isDisabled; }
+    for (const checkboxRef of this.checkboxes) {
+      (checkboxRef.nativeElement as HTMLInputElement).disabled = isDisabled;
+    }
   }
 }
 

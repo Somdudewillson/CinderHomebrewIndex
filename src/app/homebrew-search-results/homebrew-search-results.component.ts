@@ -5,9 +5,9 @@ import { HomebrewData } from '../models/HomebrewData';
 @Component({
   selector: 'app-homebrew-search-results',
   templateUrl: './homebrew-search-results.component.html',
-  styleUrls: ['./homebrew-search-results.component.css']
+  styleUrls: ['./homebrew-search-results.component.css'],
 })
 export class HomebrewSearchResultsComponent {
   @Input()
-  searchResultsUpdate: HomebrewData[]|undefined;
+  searchResultsUpdate: HomebrewData[] | undefined;
 }

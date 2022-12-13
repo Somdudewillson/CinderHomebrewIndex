@@ -133,41 +133,68 @@ export enum MovementTypes {
 }
 
 export enum SpellLevel {
-	CANTRIP,
-	FIRST,
-	SECOND,
-	THIRD,
-	FOURTH,
-	FIFTH,
-	SIXTH,
-	SEVENTH,
-	EIGHTH,
-	NINTH,
-	TENTH
+  CANTRIP,
+  FIRST,
+  SECOND,
+  THIRD,
+  FOURTH,
+  FIFTH,
+  SIXTH,
+  SEVENTH,
+  EIGHTH,
+  NINTH,
+  TENTH,
 }
 
 export enum SpellSchool {
-	ABJURATION,
-	CONJURATION,
-	DIVINATION,
-	ENCHANTMENT,
-	EVOCATION,
-	ILLUSION,
-	NECROMANCY,
-	TRANSMUTATION
+  ABJURATION,
+  CONJURATION,
+  DIVINATION,
+  ENCHANTMENT,
+  EVOCATION,
+  ILLUSION,
+  NECROMANCY,
+  TRANSMUTATION,
 }
 
 export enum SpellComponents {
-	VERBAL,
-	SOMATIC,
-	MATERIAL,
-	CONSUMES_MATERIAL
+  VERBAL,
+  SOMATIC,
+  MATERIAL,
+  CONSUMES_MATERIAL,
 }
 
-const SHORT_PROPOSITIONS = new Set<string>(["a","an","as","at","but","by","for","in","mid","of","off","on","out","per","pro","qua","to","up","via"]);
+const SHORT_PROPOSITIONS = new Set<string>([
+  'a',
+  'an',
+  'as',
+  'at',
+  'but',
+  'by',
+  'for',
+  'in',
+  'mid',
+  'of',
+  'off',
+  'on',
+  'out',
+  'per',
+  'pro',
+  'qua',
+  'to',
+  'up',
+  'via',
+]);
 export function formatEnumName(inString: string) {
-  return inString.split("_")
-    .map(str=>str.toLowerCase())
-    .map(str=>SHORT_PROPOSITIONS.has(str)?str:str.replace(/\b\S/g, function(t) { return t.toUpperCase(); }))
-    .join(" ");
+  return inString
+    .split('_')
+    .map((str) => str.toLowerCase())
+    .map((str) =>
+      SHORT_PROPOSITIONS.has(str)
+        ? str
+        : str.replace(/\b\S/g, function (t) {
+            return t.toUpperCase();
+          })
+    )
+    .join(' ');
 }
