@@ -33,7 +33,12 @@ export class HomebrewSearchData {
       return 0;
     }
     if (this.searchString.trim().length==0) {
-      return 0xFFFF-data.title.charCodeAt(0);
+      let lexScore = 0;
+      for (const char of data.title) {
+        lexScore *= 10;
+        lexScore += (0xFFFF-char.charCodeAt(0)/65535)
+      }
+      return lexScore/(10**data.title.length);
     }
 
     let score = 0;
