@@ -25,6 +25,7 @@ export enum ItemRarity {
   VERY_RARE,
   LEGENDARY,
   ARTIFACT,
+  UNKNOWN_RARITY,
 }
 
 export enum CreatureType {
