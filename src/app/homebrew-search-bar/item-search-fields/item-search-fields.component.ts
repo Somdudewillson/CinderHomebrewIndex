@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   ItemRarity,
   ItemType,
@@ -30,18 +30,6 @@ export class ItemSearchFieldsComponent
   requiresAttunementField!: EnhancedBooleanInputComponent;
   @ViewChild('hasCharges')
   hasChargesField!: EnhancedBooleanInputComponent;
-
-  itemTypeKeys: string[] = ['——'];
-  itemRarityKeys: string[] = ['——'];
-
-  ngOnInit() {
-    Object.keys(ItemType)
-      .filter((item) => isNaN(Number(item)))
-      .forEach((item) => this.itemTypeKeys.push(item));
-    Object.keys(ItemRarity)
-      .filter((item) => isNaN(Number(item)))
-      .forEach((item) => this.itemRarityKeys.push(item));
-  }
 
   extendSearchData(baseData: HomebrewSearchData): HomebrewItemSearchData {
     let result = new HomebrewItemSearchData();
