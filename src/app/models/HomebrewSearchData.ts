@@ -14,7 +14,7 @@ import {
   SpellSchool,
   SpellComponents,
 } from './HomebrewEnums';
-import { HomebrewData, HomebrewItemData } from './HomebrewData';
+import { HomebrewData, HomebrewItemData, HomebrewSpellData } from './HomebrewData';
 import { computeStringSimilarity } from '../utils/HomebrewStringUtils';
 
 export class HomebrewSearchData {
@@ -32,6 +32,7 @@ export class HomebrewSearchData {
     if (!this.filterData(data)) {
       return 0;
     }
+
     if (this.searchString.trim().length==0) {
       let lexScore = 0;
       for (const char of data.title) {
@@ -122,12 +123,28 @@ export class HomebrewMonsterSearchData extends HomebrewSearchData {
 }
 
 export class HomebrewSpellSearchData extends HomebrewSearchData {
-  spellLevel: SpellLevel = SpellLevel.CANTRIP;
-  school: SpellSchool = SpellSchool.ABJURATION;
-  saveTypes: StatType[] = [];
-  damageTypes: DamageType[] = [];
-  conditions: ConditionType[] = [];
-  components: SpellComponents[] = [];
-  concentration: boolean = false;
-  ritual: boolean = false;
+  spellLevel: SpellLevel[] | null = null;
+  school: SpellSchool[] | null = null;
+  saveTypes: StatType[] = [];// all-of
+  damageTypes: DamageType[] = [];// all-of
+  conditions: ConditionType[] = [];// all-of
+  components: SpellComponents[] = [];// all-of
+  concentration: boolean | null = false;
+  ritual: boolean | null = false;
+
+  override filterData(data: HomebrewSpellData): boolean {
+    if (!(data instanceof HomebrewSpellData)) {
+      return false;
+    }
+
+    return super.filterData(data) &&
+      (this.concentration==null || data.concentration == this.concentration) &&
+      (this.ritual==null || data.ritual == this.ritual) &&
+      (this.spellLevel==null || this.spellLevel.includes(data.spellLevel)) &&
+      (this.school==null || this.school.includes(data.school)) &&
+      (this.saveTypes.length==0 || this.saveTypes.every(saveType=>data.saveTypes.includes(saveType))) &&
+      (this.damageTypes.length==0 || this.damageTypes.every(damageType=>data.damageTypes.includes(damageType))) &&
+      (this.conditions.length==0 || this.conditions.every(condition=>data.conditions.includes(condition))) &&
+      (this.components.length==0 || this.components.every(component=>data.components.includes(component)));
+  }
 }
