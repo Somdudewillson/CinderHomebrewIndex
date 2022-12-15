@@ -22,6 +22,7 @@ export class EnumSetInputComponent<E extends {}>
   name!: string;
   @Input()
   targetEnum: E | undefined;
+
   @ViewChildren('checkboxes')
   checkboxes: QueryList<ElementRef> | undefined;
 
