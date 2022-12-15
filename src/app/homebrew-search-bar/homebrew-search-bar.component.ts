@@ -103,6 +103,10 @@ export class HomebrewSearchBarComponent {
 
     let filenames = SearchIndex.filenames.all;
     let indexResults: Set<string>[] = [];
+
+    indexResults.push(
+      HomebrewSearchBarComponent.searchTypeIndex(searchObject)
+    );
     if (searchObject.searchString.length > 0) {
       indexResults.push(
         HomebrewSearchBarComponent.searchContentIndex(searchObject)
@@ -142,6 +146,14 @@ export class HomebrewSearchBarComponent {
     }
 
     return result;
+  }
+
+  static searchTypeIndex(searchObject: HomebrewSearchData): Set<string> {
+    if (searchObject.type==null) {
+      return new Set(SearchIndex.filenames.all);
+    }
+
+    return new Set<string>(SearchIndex.type[HomebrewType[searchObject.type].toLowerCase() as keyof typeof SearchIndex.type]);
   }
 
   static searchContentIndex(searchObject: HomebrewSearchData): Set<string> {
