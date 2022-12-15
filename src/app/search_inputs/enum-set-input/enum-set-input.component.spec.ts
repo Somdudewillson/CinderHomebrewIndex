@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EnumSetInputComponent } from './enum-set-input.component';
 
 describe('EnumSetInputComponent', () => {
-  let component: EnumSetInputComponent;
-  let fixture: ComponentFixture<EnumSetInputComponent>;
+  let component: EnumSetInputComponent<any>;
+  let fixture: ComponentFixture<EnumSetInputComponent<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
