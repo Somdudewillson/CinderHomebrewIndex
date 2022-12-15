@@ -5,7 +5,6 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { formatEnumName } from 'src/app/utils/HomebrewStringUtils';
 import { IEnhancedInput } from '../IEnhancedInput';
 
