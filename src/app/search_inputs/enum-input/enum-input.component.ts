@@ -8,7 +8,7 @@ import { IEnhancedInput } from '../IEnhancedInput';
   styleUrls: ['./enum-input.component.css'],
 })
 export class EnumInputComponent<E extends {}>
-  implements IEnhancedInput<E | null>
+  implements IEnhancedInput<E[] | null>
 {
   formatEnumName = formatEnumName;
 
@@ -28,12 +28,16 @@ export class EnumInputComponent<E extends {}>
       .forEach((item) => this.enumKeys.push(item));
   }
 
-  getValue(): E | null {
+  getValue(): E[] | null {
     if (this.selectField == undefined) {
       return null;
     }
-    let input = (this.selectField.nativeElement as HTMLSelectElement)
-      .selectedIndex;
-    return input == 0 ? null : ((input - 1) as unknown as E);
+
+    let selectElement = (this.selectField.nativeElement as HTMLSelectElement);
+    let input = Array.from(selectElement.selectedOptions)
+      .map(option => option.index)
+      .filter(option => option > 0)
+      .map(option => ((option - 1) as unknown as E))
+    return input.length==0 ? null : input;
   }
 }

@@ -84,8 +84,8 @@ export class HomebrewSearchData {
 }
 
 export class HomebrewItemSearchData extends HomebrewSearchData {
-  itemType: ItemType | null = null;
-  rarity: ItemRarity | null = null;
+  itemType: ItemType[] | null = null;
+  rarity: ItemRarity[] | null = null;
   requiresAttunement: boolean | null = false;
   hasCharges: boolean | null = false;
 
@@ -95,10 +95,10 @@ export class HomebrewItemSearchData extends HomebrewSearchData {
     }
 
     return super.filterData(data) &&
-      (this.itemType==null || data.itemType == this.itemType) &&
-      (this.rarity==null || data.rarity == this.rarity) &&
       (this.requiresAttunement==null || data.requiresAttunement == this.requiresAttunement) &&
-      (this.hasCharges==null || data.hasCharges == this.hasCharges);
+      (this.hasCharges==null || data.hasCharges == this.hasCharges) &&
+      (this.itemType==null || data.itemType in this.itemType) &&
+      (this.rarity==null || data.rarity in this.rarity);
   }
 }
 
