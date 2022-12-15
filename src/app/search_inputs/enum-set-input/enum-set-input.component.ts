@@ -15,7 +15,7 @@ import { IEnhancedInput } from '../IEnhancedInput';
   styleUrls: ['./enum-set-input.component.css'],
 })
 export class EnumSetInputComponent<E extends {}>
-  implements IEnhancedInput<E[] | null>
+  implements IEnhancedInput<E[]>
 {
   formatEnumName = formatEnumName;
 
@@ -37,11 +37,11 @@ export class EnumSetInputComponent<E extends {}>
     );
   }
 
-  getValue(): E[] | null {
-    if (this.checkboxes == undefined) {
-      return null;
-    }
+  getValue(): E[] {
     let result: E[] = [];
+    if (this.checkboxes == undefined) {
+      return result;
+    }
 
     for (let i = 0; i < this.checkboxes.length; i++) {
       let checkbox: HTMLInputElement = this.checkboxes.get(i)!.nativeElement;
@@ -50,6 +50,6 @@ export class EnumSetInputComponent<E extends {}>
       }
     }
 
-    return result.length == 0 ? null : result;
+    return result;
   }
 }
