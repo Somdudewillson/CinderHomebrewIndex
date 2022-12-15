@@ -1,0 +1,10 @@
+<span>Spell Level:
+    <enum-input [targetEnum]="SpellLevel" #spellLevel></enum-input></span>
+<span>Spell School:
+    <enum-input [targetEnum]="SpellSchool" #school></enum-input></span>
+<span><enum-set-input name="Save Types" [targetEnum]="StatType" #saveTypes></enum-set-input></span>
+<span><enum-set-input name="Damage Types" [targetEnum]="DamageType" #damageTypes></enum-set-input></span>
+<span><enum-set-input name="Conditions" [targetEnum]="ConditionType" #conditions></enum-set-input></span>
+<span><enum-set-input name="Components" [targetEnum]="SpellComponents" #components></enum-set-input></span>
+<span>Concentration: <enhanced-boolean-input #concentration></enhanced-boolean-input></span>
+<span>Ritual: <enhanced-boolean-input #ritual></enhanced-boolean-input></span>

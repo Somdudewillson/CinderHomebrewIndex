@@ -11,6 +11,7 @@ import { HomebrewSearchResultsComponent } from './homebrew-search-results/homebr
 import { EnhancedBooleanInputComponent } from './search_inputs/enhanced-boolean-input/enhanced-boolean-input.component';
 import { EnumInputComponent } from './search_inputs/enum-input/enum-input.component';
 import { ItemListingDetailComponent } from './homebrew-search-results/item-listing-detail/item-listing-detail.component';
+import { SpellSearchFieldsComponent } from './homebrew-search-bar/spell-search-fields/spell-search-fields.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ItemListingDetailComponent } from './homebrew-search-results/item-listi
     HomebrewSearchResultsComponent,
     EnhancedBooleanInputComponent,
     EnumInputComponent,
-    ItemListingDetailComponent
+    ItemListingDetailComponent,
+    SpellSearchFieldsComponent
   ],
   imports: [
     BrowserModule,
