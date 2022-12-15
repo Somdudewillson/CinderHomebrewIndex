@@ -13,5 +13,6 @@
   <a class="pseudolink" (click)="toggleAdvanced()">Show Advanced {{ showAdvancedSearch ? "▲" : "▼" }}</a>
   <div id="advancedSearchElements" *ngIf="showAdvancedSearch">
     <item-search-fields *ngIf="searchType=='ITEM'"></item-search-fields>
+    <spell-search-fields *ngIf="searchType=='SPELL'"></spell-search-fields>
   </div>
 </div>

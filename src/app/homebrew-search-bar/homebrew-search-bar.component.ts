@@ -28,6 +28,7 @@ import { HomebrewSearchData } from 'src/app/models/HomebrewSearchData';
 import SearchIndex from '../../assets/index.json';
 import { computeStringSimilarity } from '../utils/HomebrewStringUtils';
 import { HomebrewData } from '../models/HomebrewData';
+import { SpellSearchFieldsComponent } from './spell-search-fields/spell-search-fields.component';
 import {
   HomebrewItemSearchData,
   HomebrewMonsterSearchData,
@@ -48,6 +49,8 @@ export class HomebrewSearchBarComponent {
   searchTextElement!: ElementRef;
   @ViewChild(ItemSearchFieldsComponent)
   itemSearchFields: ItemSearchFieldsComponent | undefined;
+  @ViewChild(SpellSearchFieldsComponent)
+  spellSearchFields: SpellSearchFieldsComponent | undefined;
 
   @Output()
   newSearchResultsEvent = new EventEmitter<HomebrewData[]>();
@@ -85,8 +88,17 @@ export class HomebrewSearchBarComponent {
       | HomebrewItemSearchData
       | HomebrewMonsterSearchData
       | HomebrewSpellSearchData = this.fetchBaseSearchData();
-    if (this.itemSearchFields != undefined) {
-      searchObject = this.itemSearchFields.extendSearchData(searchObject);
+    let extensionField: ItemSearchFieldsComponent | SpellSearchFieldsComponent | undefined;
+    switch (searchObject.type) {
+      case HomebrewType.ITEM:
+        extensionField = this.itemSearchFields;
+        break;
+      case HomebrewType.SPELL:
+        extensionField = this.spellSearchFields;
+        break;
+    }
+    if (extensionField != undefined) {
+      searchObject = extensionField.extendSearchData(searchObject);
     }
 
     let filenames = SearchIndex.filenames.all;
