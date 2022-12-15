@@ -25,7 +25,7 @@ import {
 import { ItemSearchFieldsComponent } from './item-search-fields/item-search-fields.component';
 import { HomebrewSearchData } from 'src/app/models/HomebrewSearchData';
 
-import * as SearchIndex from '../../assets/index.json';
+import SearchIndex from '../../assets/index.json';
 import { computeStringSimilarity } from '../utils/HomebrewStringUtils';
 import { HomebrewData } from '../models/HomebrewData';
 import {
@@ -89,36 +89,20 @@ export class HomebrewSearchBarComponent {
       searchObject = this.itemSearchFields.extendSearchData(searchObject);
     }
 
-    let indexLookupResult = new Set<string>();
+    let filenames = SearchIndex.filenames.all;
+    let indexResults: Set<string>[] = [];
     if (searchObject.searchString.length > 0) {
-      const searchKeywords = searchObject.searchString.split(' ');
-      for (const indexKey of Object.keys(SearchIndex)) {
-        let indexDistance = searchKeywords
-          .map(
-            (keyword) =>
-              computeStringSimilarity(keyword, indexKey) /
-              Math.max(keyword.length, indexKey.length)
-          )
-          .reduce((a, b) => (a + b + Math.min(a, b) * 2) / 3);
-        indexDistance /= searchKeywords.length;
-
-        if (indexDistance < KEYWORD_SIMILARITY_THRESHOLD) {
-          SearchIndex[indexKey as keyof typeof SearchIndex].forEach(
-            (dataEntry) => indexLookupResult.add(dataEntry)
-          );
-        }
-      }
-    } else {
-      for (const dataFiles of Object.values(SearchIndex)) {
-        if (!Array.isArray(dataFiles)) {
-          continue;
-        }
-        dataFiles.forEach((dataEntry) => indexLookupResult.add(dataEntry));
-      }
+      indexResults.push(
+        HomebrewSearchBarComponent.searchContentIndex(searchObject)
+      );
     }
 
+    filenames = filenames.filter((filename) =>
+      indexResults.every((indexResult) => indexResult.has(filename))
+    );
+
     let resultList: Array<{ data: HomebrewData; score: number }> = [];
-    for (const dataFileName of indexLookupResult) {
+    for (const dataFileName of filenames) {
       const loadedData = HomebrewData.typifyHomebrewData(
         require(`../../assets/homebrew_data/${dataFileName}.json`)
       );
@@ -130,7 +114,6 @@ export class HomebrewSearchBarComponent {
     }
     resultList.sort((a, b) => b.score - a.score);
 
-    console.log(resultList);
     this.newSearchResultsEvent.emit(
       resultList.map((sortableData) => sortableData.data)
     );
@@ -147,5 +130,30 @@ export class HomebrewSearchBarComponent {
     }
 
     return result;
+  }
+
+  static searchContentIndex(searchObject: HomebrewSearchData): Set<string> {
+    const contentIndex = SearchIndex.content;
+    let indexLookupResult = new Set<string>();
+
+    const searchKeywords = searchObject.searchString.split(' ');
+    for (const indexKey of Object.keys(contentIndex)) {
+      let indexDistance = searchKeywords
+        .map(
+          (keyword) =>
+            computeStringSimilarity(keyword, indexKey) /
+            Math.max(keyword.length, indexKey.length)
+        )
+        .reduce((a, b) => (a + b + Math.min(a, b) * 2) / 3);
+      indexDistance /= searchKeywords.length;
+
+      if (indexDistance < KEYWORD_SIMILARITY_THRESHOLD) {
+        contentIndex[indexKey as keyof typeof contentIndex].forEach(
+          (dataEntry) => indexLookupResult.add(dataEntry)
+        );
+      }
+    }
+
+    return indexLookupResult;
   }
 }
