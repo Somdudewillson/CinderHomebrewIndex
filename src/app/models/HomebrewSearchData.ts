@@ -97,8 +97,8 @@ export class HomebrewItemSearchData extends HomebrewSearchData {
     return super.filterData(data) &&
       (this.requiresAttunement==null || data.requiresAttunement == this.requiresAttunement) &&
       (this.hasCharges==null || data.hasCharges == this.hasCharges) &&
-      (this.itemType==null || data.itemType in this.itemType) &&
-      (this.rarity==null || data.rarity in this.rarity);
+      (this.itemType==null || this.itemType.includes(data.itemType)) &&
+      (this.rarity==null || this.rarity.includes(data.rarity));
   }
 }
 
