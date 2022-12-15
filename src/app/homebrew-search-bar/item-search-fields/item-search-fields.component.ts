@@ -10,7 +10,6 @@ import {
 import { IHomebrewSearchExpander } from 'src/app/models/IHomebrewSearchExpander';
 import { EnhancedBooleanInputComponent } from 'src/app/search_inputs/enhanced-boolean-input/enhanced-boolean-input.component';
 import { EnumInputComponent } from 'src/app/search_inputs/enum-input/enum-input.component';
-import { formatEnumName } from 'src/app/utils/HomebrewStringUtils';
 
 @Component({
   selector: 'item-search-fields',
@@ -20,7 +19,6 @@ import { formatEnumName } from 'src/app/utils/HomebrewStringUtils';
 export class ItemSearchFieldsComponent
   implements IHomebrewSearchExpander<HomebrewItemSearchData>
 {
-  formatEnumName = formatEnumName;
   ItemType = ItemType;
   ItemRarity = ItemRarity;
 
